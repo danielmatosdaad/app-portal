@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/masterLayout.xhtml">
+    <ui:define name="content">
+        <div id="headline-main-left">
+            <span id="loggedInIcon" class="ui-icon ui-icon-person"/>
+            <h:outputText value="#{msgs['jsftoolkit.loggedInAs']} Daniel Matos"/>
+        </div>
+
+        <div id="portalWelcome">
+            <h:outputText value="#{msgs['portal.welcome']}"/>
+        </div>
+
+        <pe:fluidGrid id="fluidGrid" value="#{portalModulesFinder.modules}" var="modDesc"
+                      fitWidth="true" hasImages="true">
+            <pe:fluidGridItem styleClass="ui-widget-header">
+                <h:panelGrid columns="2" styleClass="modGridEntry" columnClasses="modLogo,modTxt">
+                    <p:commandLink process="@this" action="#{navigationContext.goToPortlet(modDesc)}">
+                        <h:graphicImage library="#{modDesc.prefix}" name="#{modDesc.logoName}"/>
+                    </p:commandLink>
+
+                    <h:panelGroup>
+                        <p:commandLink process="@this" action="#{navigationContext.goToPortlet(modDesc)}">
+                            <h:outputText value="#{modDesc.name}" styleClass="linkToPortlet"/>
+                        </p:commandLink>
+
+                        <p/>
+                        <h:outputText value="#{modDesc.description}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </pe:fluidGridItem>
+        </pe:fluidGrid>
+    </ui:define>
+    <ui:define name="resources">
+        <h:outputStylesheet library="css" name="portal.css"/>
+    </ui:define>
+</ui:composition>

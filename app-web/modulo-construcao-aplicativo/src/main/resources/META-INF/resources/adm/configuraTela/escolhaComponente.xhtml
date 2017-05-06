@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cf="http://url.projeto/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates_proprietario/app_layout_content_central.xhtml">
+	<ui:define name="processo">
+		<script type="text/javascript">
+    function handleDrop(event, ui) {
+        var droppedFacelet = ui.draggable;
+ 
+        droppedFacelet.fadeOut('fast');
+    }
+</script>
+		<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 20%;
+}
+</style>
+		<div style="clear: both; margin-top: 30px; margin-bottom: 20px;"></div>
+		<p:steps activeIndex="0" styleClass="custom" readonly="false">
+
+			<p:menuitem value="Escolher" url="#" />
+			<p:menuitem value="Configurar" url="#" />
+			<p:menuitem value="Visualiar" url="#" />
+			<p:menuitem value="Cadastrar" url="#" />
+		</p:steps>
+		<h:form id="faceletForm">
+			<div style="clear: both; margin-top: 20px; margin-bottom: 20px;"></div>
+			<p:dataTable id="availableFacelets" var="facelet" scrollable="true"
+				scrollHeight="150" value="#{escCpnTela.componenteTelaRegistrados}">
+				<f:facet name="header">Componentes</f:facet>
+				<p:column style="width:60px">
+					<h:outputText id="dragIcon" styleClass="fa fa-cubes" />
+					<p:draggable for="dragIcon" revert="true" helper="clone" />
+					<h:outputText value="#{facelet.nome}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:droppable for="selectedFacelet" tolerance="touch"
+				activeStyleClass="ui-state-highlight" datasource="availableFacelets"
+				onDrop="handleDrop">
+				<p:ajax listener="#{escCpnTela.onFaceletDrop}"
+					update="dropArea availableFacelets" />
+			</p:droppable>
+			<div style="clear: both; margin-top: 20px;"></div>
+			<p:panel id="selectedFacelet"
+				style="margin-top:30px; float:left; width:100%;">
+				<p:outputPanel id="dropArea"
+					style="margin-left: 5px; margin-rigth: 10px;float: left; width: 100%;">
+					<h:outputText value="Arraste para essa area"
+						rendered="#{empty escCpnTela.contexto.componentesEscolhidos}"
+						style="font-size:24px;" />
+					<p:dataTable id="selectedFaceletTable" var="facelet"
+						value="#{escCpnTela.contexto.componentesEscolhidos}"
+						rendered="#{not empty escCpnTela.contexto.componentesEscolhidos}"
+						style="margin-left: 5px; margin-rigth: 5px;float: left;">
+						<f:facet name="header">Tela de Componentes</f:facet>
+						<p:column>
+							<h:outputText id="dragIcon" styleClass="fa fa-cubes" />
+							<h:outputText value="#{facelet.nome}"
+								style="margin-left:2%;" />
+							<p:commandButton update="@form" icon="fa fa-remove"
+								style="margin-left:5%;float:right;"
+								actionListener="#{escCpnTela.buttonActionRemoverComponente}">
+								<f:setPropertyActionListener name="removerComponente"
+									value="#{facelet}"
+									target="#{escCpnTela.removerCompositeEscolhido}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</p:panel>
+			<div style="clear: both; margin-top: 20px;"></div>
+		</h:form>
+		<h:form>
+			<div style="clear: both; margin-top: 20px; margin-bottom: 20px;"></div>
+			<p:commandButton action="#{confCpn.irParaPagina}" value="Continuar" icon="fa fa-arrow-right"/>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

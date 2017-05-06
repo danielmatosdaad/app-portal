@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cf="http://url.projeto/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates_proprietario/app_layout_content_central.xhtml">
+	<ui:define name="processo">
+		<h:form id="id-form-cadatrar-perfil">
+			<p:growl id="msgs" showDetail="true" />
+			<h3>Registro Perfil</h3>
+			<h:panelGrid columns="1" style="margin-bottom:10px"
+				columnClasses="label, value,message">
+				<p:outputLabel for="perfil_pai"
+					rendered="#{not empty repositorioPerfil.listaPerfil}"
+					value="Sub perfil de:" />
+				<p:selectOneListbox id="perfil_pai"
+					value="#{perfilController.perfilPaiDTO}"
+					converter="#{perfilConverter}" var="p" filter="true"
+					filterMatchMode="contains"
+					rendered="#{not empty repositorioPerfil.listaPerfil}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{repositorioPerfil.listaPerfilSelectItem}"
+						var="perfil" itemLabel="#{perfil.nomePerfil}"
+						itemValue="#{perfil}" />
+
+					<p:column>
+						<h:outputText styleClass="ui-theme ui-theme-#{p.nomePerfil}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="#{p.nomePerfil}" />
+					</p:column>
+				</p:selectOneListbox>
+
+				<p:outputLabel for="nomePerfil" value="Name:" />
+				<p:inputText id="nomePerfil" value="#{perfilDTO.nomePerfil}" />
+				<p:outputLabel for="descricao" value="Descricao:" />
+				<p:inputText id="descricao" value="#{perfilDTO.descricao}" />
+				<p:commandButton id="registrar"
+					action="#{perfilController.registrar}" value="Registrar"
+					styleClass="register" update=":id-form-tabela :id-form-cadatrar-perfil msgs" />
+			</h:panelGrid>
+
+		</h:form>
+		<div class="divisao" />
+		<h:form id="id-form-tabela">
+			<p:dataTable id="repositorio-tabela-perfil" var="perfil"
+				value="#{repositorioPerfil.listaPerfil}"
+				rendered="#{not empty repositorioPerfil.listaPerfil}">
+				<f:facet name="header">
+           	Perfils Registrados</f:facet>
+				<p:column>
+					<f:facet name="header">Id</f:facet>
+                #{perfil.id}
+            </p:column>
+				<p:column>
+					<f:facet name="header">Sub perfil de</f:facet>
+                #{perfil.perfilPai.id}
+            </p:column>
+				<p:column>
+					<f:facet name="header">Nome</f:facet>
+                #{perfil.nomePerfil}
+            </p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

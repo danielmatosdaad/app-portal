@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cf="http://url.projeto/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:projeto="http://url.projeto/componentes"
+	xmlns:c="java.sun.com/jsp/jstl/core">
+	<div class="divisao" />
+	<div style="width:100%;">
+		<ui:include src="/adm/sucesso.xhtml">
+			<ui:param name="bean" value="#{escCpnTela}" />
+			<ui:param name="estilo" value="float:center; width:30px;height:40px;" />
+			<ui:param name="title" value="Voltar ao Inicio" />
+			<ui:param name="icon" value="fa fa-recycle fa-3x" />
+			<ui:param name="valor" value="Voltar ao Inicio" />
+		</ui:include>
+	</div>
+</ui:composition>

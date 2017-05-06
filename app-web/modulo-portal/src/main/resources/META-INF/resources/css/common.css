@@ -1,0 +1,56 @@
+#headline-main-left {
+    position: absolute;
+    left: 20px;
+    top: 30px;
+}
+
+#loggedInIcon {
+    float: left;
+    margin-right: 3px;
+}
+
+#portalWelcome {
+    width: 100%;
+    text-align: center;
+    margin: 70px 0 0 0;
+    font-size: 16px;
+}
+
+#fluidGrid {
+    margin: 40px 15px 15px 15px;
+}
+
+#fluidGrid .pe-fluidgrid-item {
+    font-size: 14px !important;
+    width: 480px;
+    max-width: 480px;
+    min-height: 125px;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#fluidGrid .pe-fluidgrid-item .modGridEntry td.modLogo {
+    vertical-align: middle;
+    text-align: center;
+}
+
+#fluidGrid .pe-fluidgrid-item .modGridEntry td.modLogo img {
+    vertical-align: middle;
+    border: none;
+}
+
+#fluidGrid .pe-fluidgrid-item .modGridEntry td.modTxt {
+    vertical-align: top;
+    text-align: left;
+    padding: 8px;
+}
+
+#fluidGrid .pe-fluidgrid-item .modGridEntry td.modTxt .linkToPortlet {
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates_proprietario/app_layout_content_central.xhtml">
+	<ui:define name="processo">
+		<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 20%;
+}
+
+input {
+	width: 90%
+}
+
+textarea {
+	width: 90%
+}
+
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important
+}
+</style>
+		<div style="clear: both; margin-top: 30px; margin-bottom: 20px;"></div>
+		<h:form>
+			<p:commandButton value="" icon="fa fa-recycle" update="@all"
+				action="#{escCpnTela.reiniciar}"
+				style="float:right; width:30px;height:40px;" />
+		</h:form>
+		<p:steps activeIndex="3" styleClass="custom" readonly="false">
+
+			<p:menuitem value="Escolher" url="#" />
+			<p:menuitem value="Configurar" url="#" />
+			<p:menuitem value="Visualiar" url="#" />
+			<p:menuitem value="Cadastrar" url="#" />
+		</p:steps>
+
+		<div style="clear: both; margin-top: 20px; margin-bottom: 20px;"></div>
+		<h:form id="form-metadado-configurar">
+			<div style="clear: both; margin-top: 20px; margin-bottom: 20px;"></div>
+			<p:panelGrid columns="1" style="width:100%;">
+				<p:growl id="msgs" showDetail="true" />
+				<p:outputLabel for="grupoFuncionalidade" value="Grupo" />
+				<p:selectOneMenu id="grupoFuncionalidade"
+					value="#{cadCpnTela.grupoFuncionalidadeRegistro}"
+					converter="#{grupoFuncionalidadeConverter}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{repositorioGrupoFuncionalidade.selectItemGrupoFuncionalidade}" />
+				</p:selectOneMenu>
+				<p:outputLabel for="perfil" value="Perfil: " />
+				<p:selectOneMenu id="perfil" value="#{cadCpnTela.perfilRegistro}"
+					converter="#{perfilConverter}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{repositorioPerfil.selectItemPerfil}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="funcionalidade" value="Funcionalidade:" />
+				<p:selectOneMenu id="funcionalidade"
+					value="#{cadCpnTela.funcionalidadeRegistro}"
+					converter="#{funcionalidadeConverter}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{repositorioFuncionalidade.selectItemFuncionalidade}" />
+				</p:selectOneMenu>
+				<p:outputLabel for="nomeTela" value="Nome Tela:" />
+				<p:inputText id="nomeTela"
+					value="#{cadCpnTela.metaDadoDTO.nomeTela}" />
+				<p:outputLabel for="tituloTela" value="Titulo Tela" />
+				<p:inputText id="tituloTela"
+					value="#{cadCpnTela.metaDadoDTO.tituloTela}" />
+				<p:outputLabel for="descricaoTela" value="Descricao Tela:" />
+				<p:inputText id="descricaoTela"
+					value="#{cadCpnTela.metaDadoDTO.descricaoTela}" />
+				<p:outputLabel for="numeroTela" value="Numero Tela:" />
+				<p:inputText id="numeroTela"
+					value="#{cadCpnTela.metaDadoDTO.numeroTela}" />
+				<p:outputLabel for="urlTela" value="Url Tela:" />
+				<p:inputText id="urlTela" value="#{cadCpnTela.metaDadoDTO.urlTela}" />
+				<p:outputLabel for="xml" value="xml" />
+				<p:inputTextarea id="xml" value="#{cadCpnTela.metaDadoDTO.xml}" />
+				<p:commandButton id="registrar" action="#{cadCpnTela.registrar}"
+					value="Registrar" styleClass="register" />
+			</p:panelGrid>
+
+			<div style="clear: both;"></div>
+		</h:form>
+
+		<p:dialog header="Grupo Funcionalidade"
+			widgetVar="cadastrar-grupo-funcionalidade" modal="false" width="50%">
+
+			<h:form id="form-grupo-funcionalidade">
+				<p:panelGrid columns="1" style="width:100%;">
+					<p:outputLabel for="nomeGrupoFuncionalidade" value="Nome Grupo:" />
+					<p:inputText id="nomeGrupoFuncionalidade"
+						value="#{grupoFuncionalidadeController.grupoFuncionalidadeDTO.nomeGrupoFuncionalidade}" />
+
+					<p:outputLabel for="descricao" value="descricao do grupo" />
+					<p:inputText id="descricao"
+						value="#{grupoFuncionalidadeController.grupoFuncionalidadeDTO.descricao}" />
+					<p:commandButton id="registrar"
+						action="#{grupoFuncionalidadeController.registrar}"
+						value="Registrar" style="float:right"
+						update=":form-metadado-configurar"
+						oncomplete="PF('cadastrar-grupo-funcionalidade').hide();" />
+					<div style="clear: both; margin-top: 20px; margin-bottom: 20px;"></div>
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+		<p:dialog header="Funcionalidade" widgetVar="cadastrar-funcionalidade"
+			modal="false" width="50%">
+
+			<h:form id="form-funcionalidade">
+				<p:panelGrid columns="1" style="width:100%;">
+					<p:outputLabel for="nomeFuncionalidade" value="Name:" />
+					<p:inputText id="nomeFuncionalidade"
+						value="#{funcionalidadeController.funcionalidadeRegistro.nomeFuncionalidade}" />
+
+					<p:outputLabel for="descricao" value="Descricao:" />
+					<p:inputText id="descricao"
+						value="#{funcionalidadeController.funcionalidadeRegistro.descricao}" />
+					<p:commandButton id="registrar"
+						action="#{funcionalidadeController.registrarFuncionalidadeSemRelacionamentos}"
+						value="Registrar" style="float:right"
+						update=":form-metadado-configurar"
+						oncomplete="PF('cadastrar-funcionalidade').hide();" />
+					<div style="clear: both; margin-top: 20px; margin-bottom: 20px;"></div>
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+		<p:dialog header="Perfil" widgetVar="cadastrar-perfil" modal="false"
+			width="50%">
+
+			<h:form id="form-perfil">
+				<p:panelGrid columns="1" style="width:100%;">
+					<p:outputLabel for="perfil_pai"
+						rendered="#{not empty repositorioPerfil.listaPerfil}" value="Sub perfil de:" />
+					<p:selectOneListbox id="perfil_pai"
+						value="#{perfilController.perfilPaiDTO}"
+						converter="#{perfilConverter}" var="p" filter="true"
+						filterMatchMode="contains"
+						rendered="#{not empty repositorioPerfil.listaPerfil}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{repositorioPerfil.listaPerfilSelectItem}"
+							var="perfil" itemLabel="#{perfil.nomePerfil}"
+							itemValue="#{perfil}" />
+
+						<p:column>
+							<h:outputText styleClass="ui-theme ui-theme-#{p.nomePerfil}" />
+						</p:column>
+
+						<p:column>
+							<h:outputText value="#{p.nomePerfil}" />
+						</p:column>
+					</p:selectOneListbox>
+					<p:outputLabel for="nomePerfil" value="Name:" />
+					<p:inputText id="nomePerfil"
+						value="#{perfilController.perfilDTO.nomePerfil}" />
+					<p:outputLabel for="descricao" value="Descricao:" />
+					<p:inputText id="descricao"
+						value="#{perfilController.perfilDTO.descricao}" />
+					<p:commandButton id="registrar"
+						action="#{perfilController.registrar}" value="Registrar"
+						style="float:right" update=":form-metadado-configurar,:form-perfil"
+						oncomplete="PF('cadastrar-perfil').hide();" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		<p:panel>
+			<p:stack icon="/resources/icon/menu-icon.png" expanded="false"
+				style="width:100px;">
+				<p:menuitem value="Grupo Funcionalidade" url="#"
+					onclick="PF('cadastrar-grupo-funcionalidade').show();" />
+				<p:menuitem value="Funcionalidade" url="#"
+					onclick="PF('cadastrar-funcionalidade').show();" />
+				<p:menuitem value="Perfil" url="#"
+					onclick="PF('cadastrar-perfil').show();" />
+			</p:stack>
+		</p:panel>
+		<div style="clear: both;"></div>
+	</ui:define>
+
+	<script>
+                SyntaxHighlighter.all();
+    </script>
+</ui:composition>

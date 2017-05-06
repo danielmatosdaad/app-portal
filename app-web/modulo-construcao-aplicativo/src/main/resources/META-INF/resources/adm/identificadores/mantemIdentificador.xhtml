@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cf="http://url.projeto/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates_proprietario/app_layout_content_central.xhtml">
+	<ui:define name="processo">
+		<h3>Identificadores MetaDado</h3>
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" />
+			<p:panelGrid columns="1" style="width:100%">
+				<p:outputLabel for="name" value="Name:" />
+				<p:inputText id="name" value="#{identificadorDTO.valor}"
+					style="width:98%;" />
+				<p:outputLabel for="descricao" value="Descricao:" />
+				<p:inputText id="descricao" value="#{identificadorDTO.descricao}"
+					style="width:98%;" />
+
+				<p:outputLabel value="Tipo:" />
+				<p:selectOneMenu value="#{identificadorDTO.tipoIdentificador}"
+					converter="#{tipoIdentificadorConverter}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems
+						value="#{indentificadoresController.listaTipoIdentificadores}" />
+				</p:selectOneMenu>
+				<p:commandButton id="registrar"
+					action="#{indentificadoresController.registrar}" value="Registrar"
+					update=":repositorio-tabela-identificadores msgs" />
+			</p:panelGrid>
+
+
+		</h:form>
+		<div class="divisao" />
+		<h:form id="repositorio-tabela-identificadores">
+			<p:panelGrid rendered="#{empty repIdentificador.listaIdentificador}">
+				<em>Nao ha identificadores metadado.</em>
+			</p:panelGrid>
+			<p:dataTable var="bean"
+				value="#{repIdentificador.listaIdentificador}"
+				rendered="#{not empty repIdentificador.listaIdentificador}"
+				editable="true">
+
+				<p:ajax event="rowEdit"
+					listener="#{indentificadoresController.onRowEdit}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel"
+					listener="#{indentificadoresController.onRowCancel}"
+					update=":form:msgs" />
+
+				<f:facet name="header">Identificadores registrados</f:facet>
+
+				<p:column headerText="Id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bean.id}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="modelInput"
+								value="#{indentificadoresController.identificadorDTO.id}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Nome">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bean.valor}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText
+								value="#{indentificadoresController.identificadorDTO.valor}"
+								style="width:100%" label="Year" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Descricao">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bean.descricao}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText
+								value="#{indentificadoresController.identificadorDTO.descricao}"
+								style="width:100%" label="Year" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Tipo">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{bean.tipoIdentificador.texto}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu
+								value="#{indentificadoresController.identificadorDTO.tipoIdentificador}"
+								converter="#{tipoIdentificadorConverter}">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems
+									value="#{indentificadoresController.listaTipoIdentificadores}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

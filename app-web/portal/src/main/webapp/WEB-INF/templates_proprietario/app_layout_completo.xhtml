@@ -1,0 +1,136 @@
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+
+	<h:head>
+		<title>app-cliente</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<h:outputStylesheet name="main/css/showcase.css" />
+		<h:outputStylesheet name="main/css/sh.css" />
+		<h:outputScript name="main/js/sh.js"></h:outputScript>
+		<style type="text/css">
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+body {
+	background-color: #FFFFFF;
+}
+</style>
+	</h:head>
+	<h:body>
+		<p:layout fullPage="true">
+			<p:layoutUnit id="top" position="north" size="50">
+				<p:menubar>
+					<p:submenu label="File" icon="ui-icon-document">
+						<p:submenu label="New" icon="ui-icon-contact">
+							<p:menuitem value="Project" url="#" />
+							<p:menuitem value="Other" url="#" />
+						</p:submenu>
+						<p:menuitem value="Open" url="#" />
+						<p:menuitem value="Quit" url="#" />
+					</p:submenu>
+
+					<p:submenu label="Edit" icon="ui-icon-pencil">
+						<p:menuitem value="Undo" url="#"
+							icon="ui-icon-arrowreturnthick-1-w"></p:menuitem>
+						<p:menuitem value="Redo" url="#"
+							icon="ui-icon-arrowreturnthick-1-e"></p:menuitem>
+					</p:submenu>
+
+					<p:submenu label="Help" icon="ui-icon-help">
+						<p:menuitem value="Contents" url="#" />
+						<p:submenu label="Search" icon="ui-icon-search">
+							<p:submenu label="Text">
+								<p:menuitem value="Workspace" url="#" />
+							</p:submenu>
+							<p:menuitem value="File" url="#" />
+						</p:submenu>
+					</p:submenu>
+				</p:menubar>
+			</p:layoutUnit>
+			<p:layoutUnit id="bottom" position="south" size="60">
+                    Bottom Content
+                </p:layoutUnit>
+			<p:layoutUnit id="left" position="west" size="300" resizable="true"
+				closable="true" collapsible="true" header="Options" minSize="200">
+				<h:form>
+					<p:growl id="messages" showDetail="false" />
+					<p:menu style="width:270px;">
+						<p:submenu label="Configuracao Sistema">
+							<p:menuitem value="Parametro" outcome="/adm/parametro"
+								icon="fa fa-chevron-right" />
+							<p:menuitem value="Perfil" outcome="/adm/perfil"
+								icon="fa fa-chevron-right" />
+							<p:menuitem value="Grupo Funcionalidade"
+								outcome="/adm/grupofuncionalidade" icon="fa fa-chevron-right" />
+							<p:menuitem value="Funcionalidade" outcome="/adm/funcionalidade"
+								icon="fa fa-chevron-right" />
+							<p:menuitem value="Configura Tela"
+								outcome="/adm/configuraTela/escolhaComponente"
+								icon="fa fa-chevron-right" />
+							<p:menuitem value="Metadado" outcome="/adm/metadado"
+								icon="fa fa-chevron-right" />
+							<p:menuitem value="Identificadores MetaDado"
+								outcome="/adm/identificadores/mantemIdentificador"
+								icon="fa fa-chevron-right" />
+							<p:menuitem value="External" url="http://www.primefaces.org"
+								icon="ui-icon-home" />
+						</p:submenu>
+					</p:menu>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit id="right" position="east" size="250" header="Opcoes"
+				resizable="true" closable="true" collapsible="true"
+				style="text-align:center">
+
+					<div id="content">
+						<ui:insert name="content-rigth"></ui:insert>
+						<ui:insert name="content-rigth-menu-bar"></ui:insert>
+					</div>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<div id="content">
+					<ui:insert name="content"></ui:insert>
+					<ui:insert name="menu-bar"></ui:insert>
+				</div>
+			</p:layoutUnit>
+
+		</p:layout>
+
+		<p:dialog header="Basic Dialog" widgetVar="dlg" modal="true">
+			<h:outputText value="Resistance to PrimeFaces is futile!" />
+		</p:dialog>
+		<script>
+                SyntaxHighlighter.all();
+         </script>
+	</h:body>
+</f:view>
+</html>

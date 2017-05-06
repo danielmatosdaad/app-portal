@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cf="http://url.projeto/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates_proprietario/app_layout_content_central.xhtml">
+	<ui:define name="processo">
+		<h3>Grupo Funcionalidade</h3>
+		<h:form>
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<p:panelGrid columns="1">
+				<p:outputLabel for="nomeGrupoFuncionalidade" value="Nome Grupo:" />
+				<p:inputText id="nomeGrupoFuncionalidade"
+					value="#{grupoFuncionalidadeDTO.nomeGrupoFuncionalidade}" />
+
+				<p:outputLabel for="descricao" value="descricao do grupo" />
+				<p:inputText id="descricao"
+					value="#{grupoFuncionalidadeDTO.descricao}" />
+				<p:commandButton id="registrar"
+					action="#{grupoFuncionalidadeController.registrar}"
+					value="Registrar" styleClass="register" update=":form-tabela growl" />
+			</p:panelGrid>
+		</h:form>
+		<div class="divisao" />
+		<p:panelGrid
+			rendered="#{empty repositorioGrupoFuncionalidade.grupoFuncionalidadeRepositorio}">
+			<em>Nao ha grupos de funcionalidades do sistema.</em>
+		</p:panelGrid>
+		<h:form id="form-tabela">
+			<p:dataTable id="tabela-repositorio-grupo-funcionalidade" var="bean"
+				value="#{repositorioGrupoFuncionalidade.grupoFuncionalidadeRepositorio}"
+				rendered="#{not empty repositorioGrupoFuncionalidade.grupoFuncionalidadeRepositorio}"
+				styleClass="simpletablestyle">
+				<f:facet name="header">
+           Grupo funcionalidades registrados</f:facet>
+				<p:column>
+					<f:facet name="header">Id</f:facet>
+                #{bean.id}
+            </p:column>
+				<p:column>
+					<f:facet name="header">Nome Grupo</f:facet>
+                #{bean.nomeGrupoFuncionalidade}
+            </p:column>
+				<p:column>
+					<f:facet name="header">Descricao</f:facet>
+                #{bean.descricao}
+            </p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

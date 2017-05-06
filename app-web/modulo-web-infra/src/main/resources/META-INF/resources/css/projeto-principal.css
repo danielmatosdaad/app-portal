@@ -1,0 +1,61 @@
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+body {
+	background-color: #FFFFFF;
+	width: 97% !important;
+	margin-left: 1.5% !important;
+	margin-right: 1.5% !important;
+	height: 98.5% !important;
+}
+h3{
+	
+	margin-left: 1%;
+}
+
+input[type=text], input[type=password], input[type=select] {
+	width: 90% !important;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr {
+	border-style: none !important;
+	width: 100%;
+}
+
+form table {
+	width: 100% !important;
+}
+
+form .ui-selectonemenu {
+	width: 88% !important;
+}
+
+.content form {
+	width: 100% !important;
+}
+
+.ui-selectlistbox-filter-container input{
+		width: 80% !important;
+}
+.ui-selectonelistbox{
+	width: 90% !important;
+}
+.divisao {
+	clear: both;
+	height: 20px;
+}
+
+.ui-selectlistbox-item td:FIRST-CHILD {
+	width: 5% !important;
+}
+
+.ui-stack{
+	
+	white-space: nowrap;
+}

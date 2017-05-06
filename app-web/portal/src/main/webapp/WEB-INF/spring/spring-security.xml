@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http auto-config="true">
+		<custom-filter ref="requestContextFilter" before="FORM_LOGIN_FILTER" />
+		<intercept-url pattern="/cliente/*" access="ROLE_ADMIN,ROLE_USER" />
+		<intercept-url pattern="/adm/*" access="ROLE_ADMIN" />
+		<intercept-url pattern="/views/*" access="ROLE_ADMIN" />
+
+		<form-login login-page="/login.xhtml" default-target-url="/views/portalHome.xhtml"
+			authentication-failure-url="/login.xhtml?status=error" />
+		<logout delete-cookies="JSESSIONID" invalidate-session="true"
+			logout-success-url="/login.xhtml?status=logout" />
+		<access-denied-handler error-page="/acesonegado.xhtml" />
+
+	</http>
+
+	<authentication-manager erase-credentials="true">
+		<authentication-provider ref="customAuthenticationProvider">
+
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="requestContextFilter"
+		class="org.springframework.web.filter.RequestContextFilter" />
+	<beans:bean id="customAuthenticationProvider"
+		class="com.app.cliente.controle.acesso.CustomAuthenticationProvider" />
+
+</beans:beans>

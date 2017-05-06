@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cf="http://url.projeto/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates_proprietario/app_layout_content_central.xhtml">
+	<ui:define name="processo">
+		<h:form>
+			<p:growl id="msgs" showDetail="true" />
+			<p:panelGrid columns="1">
+				<p:outputLabel for="name" value="Name:" />
+				<p:inputText id="name" value="#{parametroController.parametroDTO.nome}" />
+				<p:outputLabel for="descricao" value="Descricao:" />
+				<p:inputText id="descricao" value="#{parametroController.parametroDTO.descricao}" />
+				<p:outputLabel for="valor" value="Valor:" />
+				<h:inputText id="valor" value="#{parametroController.parametroDTO.valor}" />
+				<p:outputLabel value="Tipo Parametro" />
+				<p:selectOneMenu value="#{parametroController.parametroDTO.tipoParametro}"
+					converter="#{tipoParametroConverter}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItems value="#{respositorioParametro.listaTipoParametros}" />
+				</p:selectOneMenu>
+				<p:commandButton id="registrar"
+					action="#{parametroController.registrar}" value="Registrar" update=":form-edit msgs"/>
+			</p:panelGrid>
+		</h:form>
+		<div style="clear: both; height: 20px"></div>
+		<h:form id="form-edit">
+			<p:growl id="msgs" showDetail="true" />
+			<p:panelGrid rendered="#{empty respositorioParametro.parametroRepositorio}">
+				<em>Nao ha parametros do sistema.</em>
+			</p:panelGrid>
+			<p:dataTable id="tabela-respositorio-parametro" var="parametro" value="#{respositorioParametro.parametroRepositorio}"
+				rendered="#{not empty respositorioParametro.parametroRepositorio}" editable="true"
+				style="margin-bottom:20px">
+				<f:facet name="header">
+           	Parametros Registrados
+       		</f:facet>
+				<p:ajax event="rowEdit" listener="#{parametroController.onRowEdit}"
+					update=":form-edit:msgs" />
+				<p:ajax event="rowEditCancel"
+					listener="#{parametroController.onRowCancel}"
+					update=":form-edit:msgs" />
+
+				<p:column headerText="Id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{parametro.id}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="modelInput" value="#{parametroDTO.id}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Nome">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{parametro.nome}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{parametroDTO.nome}" style="width:100%"
+								label="Nome" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Valor">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{parametro.valor}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{parametroDTO.valor}" style="width:100%"
+								label="Valor" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Descricao">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{parametro.descricao}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{parametroDTO.descricao}" style="width:100%"
+								label="Descricao" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Tipo">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{parametro.tipoParametro.texto}" />
+						</f:facet>
+						<f:facet name="input">
+							<h:selectOneMenu value="#{parametroDTO.tipoParametro}"
+								converter="#{tipoParametroConverter}" style="width:100%">
+								<f:selectItem itemLabel="Selecione" />
+								<f:selectItems
+									value="#{respositorioParametro.listaTipoParametros}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
