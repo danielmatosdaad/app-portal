@@ -72,7 +72,7 @@ public class SessaoAplicacaoAutenticada implements Serializable {
 	public RespostaDTO executar(TipoAcao acao, EnvioDTO envio, String nomeRepositorio, String nomeCatalogo)
 			throws NegocioException, InfraEstruturaException {
 		try {
-			return getConexao().executar(acao, envio, nomeRepositorio, nomeCatalogo);
+			return getConexao().executar(acao, envio);
 		} catch (Exception e) {
 
 			// caso o servidor caiu e foi restardado pode
@@ -80,7 +80,7 @@ public class SessaoAplicacaoAutenticada implements Serializable {
 			// tentar reconectar e reexecutar
 			if (e instanceof javax.ejb.NoSuchEJBException) {
 				this.init();
-				return getConexao().executar(acao, envio, nomeRepositorio, nomeCatalogo);
+				return getConexao().executar(acao, envio);
 			}
 			throw e;
 		}
